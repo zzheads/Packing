@@ -8,35 +8,29 @@
 
 import Foundation
 
-enum Direction {
-    case Vertical
-    case Horizontal
-    case Center
+enum Surface {
+    case Top
+    case Side
+    case Front
 }
 
 protocol BoxType {
     var width: Double { get set }
     var depth: Double { get set }
     var height: Double { get set }
-
+    
     init(width: Double, depth: Double, height: Double)
-    convenience init?(stringWithSizesDividedByX: String)
     
     var volume: Double { get }
-    var logestEdge: Double { get }
-    var widestSurface: Double { get }
+    var longestEdge: Double { get }
+    var widestSurface: (surface: Surface, square: Double) { get }
     
-    func rotate(inDirection direction: Direction)
+    mutating func rotate(fromSide: Surface, toSide: Surface)
+    mutating func rotateWidestSurfaceDown()
 }
 
 extension BoxType {
-    init(width: Double, depth: Double, height: Double) {
-        self.width = width
-        self.depth = depth
-        self.height = height
-    }
-    
-    convenience init?(stringWithSizesDividedByX: String) {
+    init?(stringWithSizesDividedByX: String) {
         let sizes = stringWithSizesDividedByX.localizedUppercase.characters.split(separator: "X").map(String.init).map({Double($0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))})
         if (sizes.count != 3) {
             return nil
@@ -52,45 +46,74 @@ extension BoxType {
     }
     
     var longestEdge: Double {
-        return [self.depth, self.width, self.height].max()
+        if (self.depth > self.width) && (self.depth > self.height) {
+            return self.depth
+        }
+        if (self.width > self.height) {
+            return self.width
+        }
+        return self.height
     }
     
-    var widestSurface: Double {
-        return [self.depth * self.width, self.depth * self.height, self.width * self.height].max()
+    var widestSurface: (surface: Surface, square: Double) {
+        let frontSurface = self.width * self.height
+        let sideSurface = self.depth * self.height
+        let topSurface = self.width * self.depth
+        if (frontSurface > sideSurface) && (frontSurface > topSurface) {
+            return (surface: .Front, square: frontSurface)
+        }
+        if (sideSurface > topSurface) {
+            return (surface: .Side, square: sideSurface)
+        }
+        return (surface: .Top, square: topSurface)
     }
     
-    func rotate(inDirection direction: Direction) {
+    mutating func rotate(fromSide: Surface, toSide: Surface) {
         var temp: Double
+        let direction = (fromSide, toSide)
         switch (direction) {
-        case .Vertical:
-            temp = self.depth
-            self.depth = self.height
-            self.height = temp
-        case .Horizontal:
-            temp = self.depth
-            self.depth = self.width
-            self.width = temp
-        case .Center:
+        case (.Side, .Top), (.Top, .Side):
             temp = self.width
             self.width = self.height
             self.height = temp
+        case (.Side, .Front), (.Front, .Side):
+            temp = self.depth
+            self.depth = self.width
+            self.width = temp
+        case (.Top, .Front), (.Front, .Top):
+            temp = self.depth
+            self.depth = self.height
+            self.height = temp
+        case (.Front, .Front), (.Top, .Top), (.Side, .Side):
+            break
         }
+    }
+    
+    // place the box on the largest surface parallel to the base of container
+    mutating func rotateWidestSurfaceDown() {
+        self.rotate(fromSide: self.widestSurface.surface, toSide: .Top)
     }
 }
 
 class Box: BoxType {
-    let title: String
+    var title: String?
     var width: Double
     var depth: Double
     var height: Double
     
-    init(title: String, width: Double, depth: Double, height: Double) {
-        self.title = title
-        self.init(width: width, depth: depth, height: height)
+    required init(width: Double, depth: Double, height: Double) {
+        self.width = width
+        self.depth = depth
+        self.height = height
     }
     
-    convenience init?(title: String, stringWithSizesDividedByX: String) {
+    convenience init(title: String?, width: Double, depth: Double, height: Double) {
+        self.init(width: width, depth: depth, height: height)
         self.title = title
+    }
+    
+    convenience init?(title: String?, stringWithSizesDividedByX: String) {
         self.init(stringWithSizesDividedByX: stringWithSizesDividedByX)
+        self.title = title
     }
 }
