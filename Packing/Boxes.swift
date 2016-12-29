@@ -46,4 +46,15 @@ extension Array where Element: BoxType {
         return sorted.first
     }
     
+    // determine number of unique (different sizes) boxes
+    var numberUniqueBoxes: Int {
+        
+    }
+    
+    //pack
+    func pack(boxes: [BoxType]) -> [BoxType] {
+        // Step1: Input box dimensions and numbers
+        
+    }
+    
 }

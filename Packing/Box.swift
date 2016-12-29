@@ -93,9 +93,30 @@ extension BoxType {
     mutating func rotateWidestSurfaceDown() {
         self.rotate(fromSide: self.widestSurface.surface, toSide: .Top)
     }
+    
+    // determine is two boxes have same sizes or not in current position
+    private func isSizesEqual(box: BoxType) -> Bool {
+        if (self.depth == box.depth) && (self.width == box.width) && (self.height == box.height) {
+            return true
+        }
+    }
+    
+    // determine is two boxes have different sizes or not in all possible positions (3)
+    func isEqual(box: BoxType) -> Bool {
+        var boxToRotate: BoxType
+        let allSurfaces: [Surface] = [.Top, .Side, .Front]
+        for surface in allSurfaces {
+            boxToRotate = box
+            boxToRotate.rotate(fromSide: .Top, toSide: surface)
+            if (self.isSizesEqual(box: boxToRotate)) {
+                return true
+            }
+        }
+        return false
+    }
 }
 
-class Box: BoxType {
+class Box: BoxType, CustomStringConvertible {
     var title: String?
     var width: Double
     var depth: Double
@@ -115,5 +136,16 @@ class Box: BoxType {
     convenience init?(title: String?, stringWithSizesDividedByX: String) {
         self.init(stringWithSizesDividedByX: stringWithSizesDividedByX)
         self.title = title
+    }
+    
+    var name: String {
+        guard let name = self.title else {
+            return "Noname"
+        }
+        return name
+    }
+    
+    var description: String {
+        return "Box: [name:\(self.name), width:\(self.width), depth: \(self.depth), height: \(self.height)]"
     }
 }
