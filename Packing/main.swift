@@ -10,7 +10,13 @@ import Foundation
 
 let boxes: [Box] = [
     Box(stringWithSizesDividedByX: "10x20x30")!,
-    Box(stringWithSizesDividedByX: "20x10x30")!
+    Box(stringWithSizesDividedByX: "20x10x30")!,
+    Box(stringWithSizesDividedByX: "20x40x30")!,
+    Box(stringWithSizesDividedByX: "20x10x30")!,
+    Box(stringWithSizesDividedByX: "20x10x30")!,
+    Box(stringWithSizesDividedByX: "20x10x30")!,
+    Box(stringWithSizesDividedByX: "20x20x30")!,
+    Box(stringWithSizesDividedByX: "20x10x30")!,
 ]
 
-print("Unique types of boxes: \(boxes.numberUniqueBoxes)")
+print("Unique boxes: \(boxes.numberUniqueBoxes)")

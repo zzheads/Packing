@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Surface {
+enum Surface: String {
     case Top
     case Side
     case Front
@@ -27,6 +27,7 @@ protocol BoxType {
     
     mutating func rotate(fromSide: Surface, toSide: Surface)
     mutating func rotateWidestSurfaceDown()
+    func isEqual(box: BoxType) -> Bool
     static func ==(box1: BoxType, box2: BoxType) -> Bool
 }
 
@@ -95,25 +96,17 @@ extension BoxType {
         self.rotate(fromSide: self.widestSurface.surface, toSide: .Top)
     }
     
-    // determine is two boxes have same sizes or not in current position
-    private func isSizesEqual(box: BoxType) -> Bool {
-        if (self.depth == box.depth) && (self.width == box.width) && (self.height == box.height) {
+    // determine is two boxes have different sizes or not in all possible positions (3)
+    func isEqual(box: BoxType) -> Bool {
+        let values1 = [self.width, self.depth, self.height].sorted()
+        let values2 = [box.width, box.depth, box.height].sorted()
+        if (values1 == values2) {
             return true
         }
         return false
     }
     
-    // determine is two boxes have different sizes or not in all possible positions (3)
     static func ==(box1: BoxType, box2: BoxType) -> Bool {
-        var boxToRotate: BoxType
-        let allSurfaces: [Surface] = [.Top, .Side, .Front]
-        for surface in allSurfaces {
-            boxToRotate = box2
-            boxToRotate.rotate(fromSide: .Top, toSide: surface)
-            if (box1.isSizesEqual(box: boxToRotate)) {
-                return true
-            }
-        }
-        return false
+        return box1.isEqual(box: box2)
     }
 }

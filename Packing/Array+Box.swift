@@ -11,7 +11,19 @@ import Foundation
 extension Array where Element: Box {
     // determine number of unique (different sizes) boxes
     var numberUniqueBoxes: Int {
-        return Set(self).count
+        var reducingArray: [Box] = self
+        var uniqueBoxes = 0
+        for box in self {
+            if (reducingArray.contains(box)) {
+                while (reducingArray.contains(box)) {
+                    if let index = reducingArray.index(of: box) {
+                        reducingArray.remove(at: index)
+                    }
+                }
+                uniqueBoxes += 1
+            }
+        }
+        return uniqueBoxes
     }
     
     //pack
