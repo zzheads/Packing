@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Box: BoxType, CustomStringConvertible, Equatable {
+class Box: BoxType, CustomStringConvertible, Hashable {
     var title: String?
     var width: Double
     var depth: Double
@@ -40,7 +40,11 @@ class Box: BoxType, CustomStringConvertible, Equatable {
     var description: String {
         return "Box: [name:\(self.name), width:\(self.width), depth: \(self.depth), height: \(self.height)]"
     }
-        
+    
+    var hashValue: Int {
+        return Int([self.depth, self.width, self.height].min()!).hashValue
+    }
+    
     static func ==(box1: Box, box2: Box) -> Bool {
         return box1.isEqual(box: box2)
     }

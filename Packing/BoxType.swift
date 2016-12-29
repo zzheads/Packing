@@ -98,12 +98,7 @@ extension BoxType {
     
     // determine is two boxes have different sizes or not in all possible positions (3)
     func isEqual(box: BoxType) -> Bool {
-        let values1 = [self.width, self.depth, self.height].sorted()
-        let values2 = [box.width, box.depth, box.height].sorted()
-        if (values1 == values2) {
-            return true
-        }
-        return false
+        return ([self.width, self.depth, self.height].sorted() == [box.width, box.depth, box.height].sorted())
     }
     
     static func ==(box1: BoxType, box2: BoxType) -> Bool {
