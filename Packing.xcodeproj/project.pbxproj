@@ -12,6 +12,8 @@
 		A6813DF11E150D3F008C992E /* Array+Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6813DF01E150D3F008C992E /* Array+Box.swift */; };
 		A6813DF61E15309B008C992E /* BoxType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6813DF51E15309B008C992E /* BoxType.swift */; };
 		A6813DF81E1530EF008C992E /* Array+BoxType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6813DF71E1530EF008C992E /* Array+BoxType.swift */; };
+		A6813DFC1E1586C6008C992E /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6813DFB1E1586C6008C992E /* Container.swift */; };
+		A6813E021E15B666008C992E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6813E011E15B666008C992E /* Point.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +35,8 @@
 		A6813DF01E150D3F008C992E /* Array+Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Box.swift"; sourceTree = "<group>"; };
 		A6813DF51E15309B008C992E /* BoxType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxType.swift; sourceTree = "<group>"; };
 		A6813DF71E1530EF008C992E /* Array+BoxType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+BoxType.swift"; sourceTree = "<group>"; };
+		A6813DFB1E1586C6008C992E /* Container.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		A6813E011E15B666008C992E /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 		A6813DED1E14F920008C992E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A6813E001E15B659008C992E /* Point */,
+				A6813DFA1E1586B5008C992E /* Container */,
 				A6813DF91E1530FC008C992E /* Box */,
 				A6813DF41E153084008C992E /* BoxType */,
 			);
@@ -96,6 +102,22 @@
 				A6813DF01E150D3F008C992E /* Array+Box.swift */,
 			);
 			name = Box;
+			sourceTree = "<group>";
+		};
+		A6813DFA1E1586B5008C992E /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				A6813DFB1E1586C6008C992E /* Container.swift */,
+			);
+			name = Container;
+			sourceTree = "<group>";
+		};
+		A6813E001E15B659008C992E /* Point */ = {
+			isa = PBXGroup;
+			children = (
+				A6813E011E15B666008C992E /* Point.swift */,
+			);
+			name = Point;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,8 +180,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6813DE71E14F62A008C992E /* main.swift in Sources */,
+				A6813DFC1E1586C6008C992E /* Container.swift in Sources */,
 				A6813DF11E150D3F008C992E /* Array+Box.swift in Sources */,
 				A6813DF81E1530EF008C992E /* Array+BoxType.swift in Sources */,
+				A6813E021E15B666008C992E /* Point.swift in Sources */,
 				A6813DEF1E14F946008C992E /* Box.swift in Sources */,
 				A6813DF61E15309B008C992E /* BoxType.swift in Sources */,
 			);

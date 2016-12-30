@@ -9,6 +9,16 @@
 import Foundation
 
 extension Array where Element: BoxType {
+    
+    // array of edges of all boxes, sorted
+    var edgesSorted: [Double] {
+        var allEdges: [Double] = []
+        for box in self {
+            allEdges.append(contentsOf: box.edges)
+        }
+        return allEdges.sorted()
+    }
+    
     // sort by length of longest edge of the box
     func sortByLongestEdge() -> [BoxType] {
         return self.sorted { (box1, box2) -> Bool in
@@ -19,30 +29,21 @@ extension Array where Element: BoxType {
         }
     }
     
-    // determine first longest edge of all boxes
-    var firstLongestEdge: BoxType? {
-        if (self.count > 0) {
-            return self.sortByLongestEdge()[0]
-        }
-        return nil
-    }
-    
-    // determine second longest edge of all boxes
-    var secondLongestEdge: BoxType? {
-        if (self.count > 1) {
-            return self.sortByLongestEdge()[1]
-        }
-        return nil
-    }
-    
     // determine box which has the widest surface area. If there is more than one, choose the box which has the minimum height
     var widestSurfaceBox: BoxType? {
         let sorted = self.sorted { (box1, box2) -> Bool in
-            if (box1.widestSurface.square > box2.widestSurface.square) {
+            if (box1.widestSurface.square == box2.widestSurface.square) {
+                if (box1.heightWhenWidestSurfaceDown > box2.heightWhenWidestSurfaceDown) {
+                    return false
+                }
                 return true
+            } else {
+                if (box1.widestSurface.square > box2.widestSurface.square) {
+                    return true
+                }
+                return false
             }
-            return false
         }
         return sorted.first
-    }    
+    }
 }

@@ -57,6 +57,10 @@ extension BoxType {
         return self.height
     }
     
+    var edges: [Double] {
+        return [self.width, self.depth, self.height]
+    }
+    
     var widestSurface: (surface: Surface, square: Double) {
         let frontSurface = self.width * self.height
         let sideSurface = self.depth * self.height
@@ -68,6 +72,14 @@ extension BoxType {
             return (surface: .Side, square: sideSurface)
         }
         return (surface: .Top, square: topSurface)
+    }
+    
+    var heightWhenWidestSurfaceDown: Double {
+        switch (self.widestSurface.surface) {
+        case .Top: return self.height
+        case .Side: return self.width
+        case .Front: return self.depth
+        }
     }
     
     mutating func rotate(fromSide: Surface, toSide: Surface) {
@@ -103,5 +115,17 @@ extension BoxType {
     
     static func ==(box1: BoxType, box2: BoxType) -> Bool {
         return box1.isEqual(box: box2)
+    }
+    
+    // determine if box can hold another box
+    func canHold(box: BoxType) -> Bool {
+        let holderEdges = self.edges.sorted()
+        let boxEdges = box.edges.sorted()
+        for i in 0..<holderEdges.count {
+            if (holderEdges[i] < boxEdges[i]) {
+                return false
+            }
+        }
+        return true
     }
 }
