@@ -30,6 +30,10 @@ class Box: BoxType, CustomStringConvertible, Hashable {
         self.title = title
     }
     
+    convenience init(box: Box) {
+        self.init(title: box.title, width: box.width, depth: box.depth, height: box.height)
+    }
+    
     var name: String {
         guard let name = self.title else {
             return "Noname"

@@ -117,15 +117,39 @@ extension BoxType {
         return box1.isEqual(box: box2)
     }
     
-    // determine if box can hold another box
-    func canHold(box: BoxType) -> Bool {
-        let holderEdges = self.edges.sorted()
-        let boxEdges = box.edges.sorted()
-        for i in 0..<holderEdges.count {
-            if (holderEdges[i] < boxEdges[i]) {
+    static func <(box1: BoxType, box2: BoxType) -> Bool {
+        for i in 0..<box1.edges.count {
+            if (box1.edges.sorted()[i]>=box2.edges.sorted()[i]) {
                 return false
             }
         }
         return true
     }
+    
+    static func <=(box1: BoxType, box2: BoxType) -> Bool {
+        for i in 0..<box1.edges.count {
+            if (box1.edges.sorted()[i]>box2.edges.sorted()[i]) {
+                return false
+            }
+        }
+        return true
+    }
+    
+    static func >(box1: BoxType, box2: BoxType) -> Bool {
+        for i in 0..<box1.edges.count {
+            if (box1.edges.sorted()[i]<=box2.edges.sorted()[i]) {
+                return false
+            }
+        }
+        return true
+    }
+
+    static func >=(box1: BoxType, box2: BoxType) -> Bool {
+        for i in 0..<box1.edges.count {
+            if (box1.edges.sorted()[i]<box2.edges.sorted()[i]) {
+                return false
+            }
+        }
+        return true
+    }    
 }

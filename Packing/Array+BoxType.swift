@@ -46,4 +46,15 @@ extension Array where Element: BoxType {
         }
         return sorted.first
     }
+    
+    //determine max height of boxes
+    var maxHeight: Double {
+        var maxHeight: Double = 0
+        for box in self {
+            if box.height > maxHeight {
+                maxHeight = box.height
+            }
+        }
+        return maxHeight
+    }
 }
